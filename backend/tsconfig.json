@@ -1,0 +1,22 @@
+
+{
+  "compilerOptions": {
+    // Configuração do TypeScript e módulos Node.js
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    // Organização dos arquivos de origem e compilados
+    "rootDir": "src",
+    "outDir": "dist",
+
+    // Verificação de tipos e compatibilidade
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+
+  // Arquivos incluídos na compilação
+  "include": ["src"]
+}

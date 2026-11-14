@@ -1,0 +1,49 @@
+
+{
+  "compilerOptions": {
+    // Utiliza os recursos do JavaScript ES2022
+    "target": "ES2022",
+
+    // Mantém o comportamento moderno dos campos de classes
+    "useDefineForClassFields": true,
+
+    // Disponibiliza tipos do JavaScript e navegador
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+
+    // Utiliza o sistema moderno de módulos
+    "module": "ESNext",
+
+    // Ignora verificações internas de tipos das bibliotecas
+    "skipLibCheck": true,
+
+    // Resolve módulos utilizando as regras do Vite
+    "moduleResolution": "Bundler",
+
+    // Permite importar arquivos com extensão .ts
+    "allowImportingTsExtensions": true,
+
+    // Permite importar arquivos JSON
+    "resolveJsonModule": true,
+
+    // Garante compatibilidade com compilação isolada
+    "isolatedModules": true,
+
+    // Não gera arquivos JavaScript pelo TypeScript
+    "noEmit": true,
+
+    // Habilita a transformação moderna do JSX
+    "jsx": "react-jsx",
+
+    // Ativa verificações rigorosas de tipos
+    "strict": true,
+
+    // Identifica variáveis declaradas e não utilizadas
+    "noUnusedLocals": true,
+
+    // Identifica parâmetros não utilizados
+    "noUnusedParameters": true
+  },
+
+  // Arquivos que serão verificados pelo TypeScript
+  "include": ["src", "vite.config.ts"]
+}
