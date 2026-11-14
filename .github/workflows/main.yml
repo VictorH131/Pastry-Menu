@@ -1,5 +1,5 @@
 
-name: Pastry Menu - Base
+name: Pastry Menu - CI
 
 on:
   workflow_dispatch:
@@ -8,8 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  frontend:
-    name: Validar Frontend
+  ci:
+    name: Validar Projeto
     runs-on: ubuntu-latest
 
     steps:
@@ -21,31 +21,29 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Instalar dependencias
+      # FRONTEND
+      - name: Instalar dependencias Frontend
         working-directory: ./frontend
         run: npm ci
 
-      - name: Compilar Frontend
+      - name: Validar Frontend
         working-directory: ./frontend
         run: npm run build
 
-  backend:
-    name: Validar Backend
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Baixar codigo
-        uses: actions/checkout@v4
-
-      - name: Instalar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Instalar dependencias
+      # BACKEND
+      - name: Instalar dependencias Backend
         working-directory: ./backend
         run: npm ci
 
-      - name: Validar TypeScript
+      - name: Validar Backend
         working-directory: ./backend
         run: npx tsc --noEmit
+
+      # SEGURANCA
+      - name: Auditoria Frontend
+        working-directory: ./frontend
+        run: npm audit --audit-level=high
+
+      - name: Auditoria Backend
+        working-directory: ./backend
+        run: npm audit --audit-level=high
