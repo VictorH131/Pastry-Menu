@@ -1,7 +1,7 @@
 
 import express, { type ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
-import { healthRouter } from './routes/health.js';
+import { healthRouter } from './routes/auth_google.js';
 
 // Inicializa o Express e configura a segurança
 export const app = express();

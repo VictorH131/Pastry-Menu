@@ -1,0 +1,195 @@
+.toast-stack {
+    position: fixed;
+    top: 105px;
+    right: 18px;
+    z-index: 100;
+    display: grid;
+    gap: 10px;
+    max-width: calc(100vw - 36px)
+}
+
+.toast {
+    display: flex;
+    gap: 12px;
+    align-items: start;
+    background: white;
+    box-shadow: 0 6px 25px #0003;
+    border-left: 5px solid #2585cc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 340px;
+    max-width: 100%
+}
+
+.toast.error {
+    border-color: #d30016
+}
+
+.toast.success {
+    border-color: #218e4c
+}
+
+.toast-symbol {
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    display: grid;
+    place-items: center;
+    font-weight: 800
+}
+
+.toast p {
+    font-size: 12px;
+    margin: 5px 0;
+    color: #666
+}
+
+.toast button {
+    margin-left: auto;
+    background: none;
+    border: 0;
+    font-size: 22px;
+    color: #777
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0009;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    z-index: 90
+}
+
+.modal {
+    position: relative;
+    background: white;
+    border-radius: 24px;
+    padding: 30px 28px 25px;
+    width: 420px;
+    max-width: 100%;
+    max-height: 95vh;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 20px 70px #0005
+}
+
+.close-modal {
+    position: absolute;
+    right: 17px;
+    top: 15px;
+    background: #ffc400;
+    border: 0;
+    border-radius: 50%;
+    font-size: 22px;
+    width: 32px;
+    height: 32px
+}
+
+.modal-logo {
+    width: 175px;
+    height: 90px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 0 transparent)
+}
+
+.modal h2 {
+    font-size: 23px;
+    margin: 10px 0 5px
+}
+
+.modal p {
+    font-size: 12px;
+    color: #887a78;
+    line-height: 1.5;
+    margin-bottom: 20px
+}
+
+.tabs {
+    display: flex;
+    background: #ffe4e4;
+    border-radius: 12px;
+    margin: 15px 0;
+    overflow: hidden
+}
+
+.tabs button {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 12px
+}
+
+.tabs .active {
+    background: #b8000c;
+    color: white;
+    border-radius: 12px
+}
+
+.google,
+.modal-primary,
+.modal-back {
+    display: block;
+    width: 100%;
+    border-radius: 9px;
+    padding: 13px;
+    margin: 12px 0;
+    font-weight: 700
+}
+
+.google {
+    background: white;
+    border: 1px solid #6e6e6e
+}
+
+.modal-primary {
+    background: #ba0009;
+    color: white;
+    border: 0
+}
+
+.modal-back {
+    background: #ffbf00;
+    color: #442718;
+    border: 0
+}
+
+.separator {
+    color: #a58c87;
+    font-size: 11px;
+    margin: 14px
+}
+
+.terms {
+    display: block;
+    color: #b89c96;
+    font-size: 10px;
+    line-height: 1.5;
+    margin-top: 24px
+}
+
+.modal label {
+    display: block;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 22px 0
+}
+
+.modal input {
+    width: 100%;
+    display: block;
+    background: #ffe7e7;
+    border: 0;
+    border-radius: 7px;
+    padding: 14px;
+    margin-top: 8px
+}
+
+.code-label input {
+    letter-spacing: 12px;
+    text-align: center;
+    font-size: 24px
+}
