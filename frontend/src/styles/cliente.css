@@ -1,1 +1,125 @@
-/* Reservado para a interface de gerenciamento dos Clientes. */
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    font: 16px system-ui, Arial;
+    background: #fafafa;
+    color: #242424
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 18px max(24px, calc((100vw - 1000px)/2));
+    border-bottom: 1px solid #ddd
+}
+
+header strong {
+    color: #b91c1c;
+    font-size: 23px
+}
+
+nav {
+    display: flex;
+    gap: 12px
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background: white;
+    color: inherit
+}
+
+button:hover {
+    background: #f2f2f2
+}
+
+.principal {
+    background: #b91c1c;
+    color: white;
+    border: 0;
+    margin-top: 15px
+}
+
+.principal:hover {
+    background: #991b1b
+}
+
+main {
+    max-width: 1000px;
+    margin: 38px auto;
+    padding: 0 24px
+}
+
+h1 {
+    font-size: 28px
+}
+
+h2 {
+    font-size: 20px
+}
+
+.grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 24px 0
+}
+
+article {
+    padding: 18px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px
+}
+
+form {
+    max-width: 440px;
+    display: grid;
+    gap: 12px;
+    margin: 24px 0
+}
+
+label {
+    display: grid;
+    gap: 6px;
+    text-transform: capitalize
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font: inherit
+}
+
+.erro {
+    padding: 12px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 6px
+}
+
+@media(max-width:600px) {
+    header {
+        padding: 16px;
+        gap: 10px
+    }
+
+    nav {
+        gap: 4px
+    }
+
+    nav button {
+        padding: 8px
+    }
+}

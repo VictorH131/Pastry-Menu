@@ -1,45 +1,42 @@
-
 import express, { type ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
-import { healthRouter } from './routes/auth_google.js';
+import { logger } from './utils/logger.js';
 
-// Inicializa o Express e configura a segurança
+// Inicializa o Express
 export const app = express();
 
-
-app.disable('x-powered-by'); // Remove o cabeçalho que identifica o Express.
-app.use(helmet()); // Configura o Helmet para proteger a API 
-app.use(express.json({ limit: '16kb' })); // requisições JSON com limite de 16kb
-
-// Registra as rotas da API
-app.use('/api/health', healthRouter);
+// Configurações de segurança
+app.disable('x-powered-by');
+app.use(helmet());
+app.use(express.json({ limit: '16kb' }));
 
 // Trata rotas inexistentes
 app.use((_request, response) => {
   response.status(404).json({
-    error: 'Rota não encontrada'
+    erro: 'Rota não encontrada'
   });
 });
 
 // Centraliza o tratamento de erros
 const errorHandler: ErrorRequestHandler = (
   error,
-  _request,
+  request,
   response,
-  _next
+  next
 ) => {
-  console.error(
-    'Erro interno:',
-    error instanceof Error ? error.message : 'desconhecido'
-  );
+  const mensagem = error instanceof Error
+    ? error.message
+    : 'Erro desconhecido';
+
+  void logger.erro(`${request.method} ${request.path}: ${mensagem}`);
 
   if (response.headersSent) {
-    _next(error);
+    next(error);
     return;
   }
 
   response.status(500).json({
-    error: 'Erro interno do servidor'
+    erro: 'Erro interno do servidor'
   });
 };
 
