@@ -156,16 +156,26 @@ export default function LoginModal({
 
       googleContainer.current.replaceChildren();
 
-      google.accounts.id.renderButton(
-        googleContainer.current,
-        {
-          theme: 'outline',
-          size: 'large',
-          text: 'continue_with',
-          shape: 'pill',
-          width: 300
+      const container = googleContainer.current;
+
+      if (container) {
+        const largura = Math.min(
+          Math.floor(container.getBoundingClientRect().width),
+          400
+        );
+
+        if (largura > 0) {
+          container.replaceChildren();
+
+          google.accounts.id.renderButton(container, {
+            theme: 'outline',
+            size: 'large',
+            text: 'continue_with',
+            shape: 'pill',
+            width: largura
+          });
         }
-      );
+      }
     };
 
     const intervalo = window.setInterval(() => {

@@ -1,4 +1,3 @@
-
 import {
   Router,
   type Request,
@@ -248,6 +247,14 @@ function limitar(
 }
 
 // Proteção contra requisições de outras origens
+
+/* Proteção contra requisições de outras origens */
+
+const origensPermitidas = new Set([
+  'http://127.0.0.1:5174',
+  'http://localhost:5174'
+]);
+
 api.use((req, res, next) => {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     next();
@@ -261,7 +268,22 @@ api.use((req, res, next) => {
     try {
       const url = new URL(origem);
 
-      if (url.host === host) {
+      const mesmaOrigem =
+        url.host === host &&
+        (
+          url.protocol === 'http:' ||
+          url.protocol === 'https:'
+        );
+
+      const frontendLocalPermitido =
+        !PRODUCAO &&
+        origensPermitidas.has(url.origin) &&
+        (
+          host === '127.0.0.1:5173' ||
+          host === 'localhost:5173'
+        );
+
+      if (mesmaOrigem || frontendLocalPermitido) {
         next();
         return;
       }
@@ -286,6 +308,7 @@ api.use((req, res, next) => {
 
   next();
 });
+
 
 // Cadastro de usuário
 api.post('/cadastro', limitar, asyncRoute(async (req, res) => {

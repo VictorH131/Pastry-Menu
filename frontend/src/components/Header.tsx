@@ -320,27 +320,10 @@ export default function Header({
                         </span>
                       </button>
 
-                      {/* TROCAR CONTA */}
-                      <button
-                        type="button"
-                        onClick={trocarConta}
-                      >
-                        <span className="pm-conta-opcao-icone">
-                          ⇄
-                        </span>
-
-                        <span>
-                          <strong>Trocar de conta</strong>
-                          <small>Entrar com outra conta</small>
-                        </span>
-
-                        <span className="pm-conta-seta">
-                          ›
-                        </span>
-                      </button>
                     </div>
 
                     {/* RODAPÉ */}
+
                     <div className="pm-conta-rodape">
                       <button
                         type="button"
@@ -348,6 +331,14 @@ export default function Header({
                         onClick={sair}
                       >
                         Sair da conta
+                      </button>
+
+                      <button
+                        type="button"
+                        className="pm-conta-trocar"
+                        onClick={trocarConta}
+                      >
+                        Trocar de conta
                       </button>
 
                       <div className="pm-conta-links">
@@ -362,6 +353,7 @@ export default function Header({
                         </a>
                       </div>
                     </div>
+
 
                   </div>
                 )}

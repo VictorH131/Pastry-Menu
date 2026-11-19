@@ -262,6 +262,13 @@
     .pm-login-telefone {
         font-size: 13px;
     }
+    .google-container {
+  width: 90%;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
 }
 
 @media (max-width: 380px) {
@@ -273,6 +280,7 @@
         font-size: 18px;
     }
 }
+
 
 
 
@@ -475,6 +483,22 @@
   color: #555;
   text-decoration: none;
 }
+.pm-conta-trocar {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: #fff;
+  color: #b90009;
+  border: 1px solid #b90009;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pm-conta-trocar:hover {
+  background: #fff1f1;
+}
 
 @media (max-width: 600px) {
   .pm-conta-popup {
@@ -484,4 +508,200 @@
     max-height: calc(100dvh - 75px);
     overflow-y: auto;
   }
+}
+
+
+
+
+/* =========================================
+   CARRINHO LATERAL
+========================================= */
+
+.pm-sacola-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.pm-sacola-painel {
+    width: min(460px, 100%);
+    height: 100dvh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+}
+
+.pm-sacola-painel,
+.pm-sacola-painel * {
+    box-sizing: border-box;
+}
+
+/* CABEÇALHO */
+
+.pm-sacola-topo {
+    min-height: 80px;
+    padding: 16px 20px;
+    background: #fff4dc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.pm-sacola-titulo,
+.pm-sacola-topo-direita {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pm-sacola-titulo {
+    min-width: 0;
+}
+
+.pm-sacola-titulo h2 {
+    margin: 0;
+    color: #451b1b;
+    font-size: 22px;
+    white-space: nowrap;
+}
+
+.pm-sacola-icone {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #ffb900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pm-sacola-icone img {
+    width: 23px;
+    height: 23px;
+    object-fit: contain;
+}
+
+.pm-sacola-contador {
+    padding: 7px 10px;
+    border-radius: 20px;
+    background: #fff;
+    color: #451b1b;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pm-sacola-fechar {
+    border: none;
+    padding: 4px;
+    background: transparent;
+    color: #451b1b;
+    font-size: 27px;
+    cursor: pointer;
+}
+
+/* CONTEÚDO */
+
+.pm-sacola-conteudo {
+    flex: 1;
+    min-height: 0;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.pm-sacola-vazia {
+    width: 100%;
+    max-width: 360px;
+    margin: auto;
+    text-align: center;
+    color: #505050;
+}
+
+.pm-sacola-vazia h3 {
+    margin: 0 auto 30px;
+    font-size: 23px;
+    line-height: 1.25;
+}
+
+.pm-sacola-vazia p {
+    margin: 20px auto;
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.pm-sacola-vazia p button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #0875e1;
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+}
+
+.pm-sacola-divisor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #b90009;
+    font-size: 14px;
+}
+
+.pm-sacola-divisor::before,
+.pm-sacola-divisor::after {
+    content: '';
+    height: 1px;
+    background: #777;
+    flex: 1;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+    .pm-sacola-painel {
+        width: 100%;
+    }
+
+    .pm-sacola-topo {
+        min-height: 70px;
+        padding: 12px 14px;
+    }
+
+    .pm-sacola-titulo h2 {
+        font-size: 19px;
+    }
+
+    .pm-sacola-icone {
+        width: 36px;
+        height: 36px;
+    }
+
+    .pm-sacola-contador {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    .pm-sacola-conteudo {
+        padding: 18px;
+    }
+
+    .pm-sacola-vazia h3 {
+        font-size: 21px;
+    }
+
+    .pm-sacola-vazia p {
+        font-size: 16px;
+    }
 }

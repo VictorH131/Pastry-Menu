@@ -1,23 +1,60 @@
 import { useState, type FormEvent } from 'react';
 import { requisicao, type NovaLoja } from '../services/api';
-export default function CriarEstabelecimento({ onVoltar, onSalvo }: { onVoltar: () => void; onSalvo: () => Promise<void> }) {
-  const [loja, setLoja] = useState<NovaLoja>({ nome: '', url: '', tipo_operacao: 'tradicional', descricao: '', telefone: '', cidade: '', estado: '', tempo_preparo: '20 - 30 minutos' });
-  const [erro, setErro] = useState(''); const [salvando, setSalvando] = useState(false);
-  async function salvar(e: FormEvent) {
-    e.preventDefault(); setErro(''); setSalvando(true);
-    try { await requisicao('/estabelecimentos', { method: 'POST', body: JSON.stringify(loja) }); await onSalvo(); }
-    catch (e) { setErro((e as Error).message); } finally { setSalvando(false); }
+import '../styles/loja.css';
+import iconeLoja from '../img/logos/loja.png';
+import iconeMoto from '../img/logos/moto.png';
+import iconeCaminhao from '../img/logos/caminhao.png';
+
+type Props = { onVoltar: () => void; onSalvo: () => Promise<void> };
+type Tipo = 'tradicional' | 'dark_kitchen' | 'ponto_movel';
+const formatos: { id: Tipo; icone: string; nome: string; descricao: string; tags: string[] }[] = [
+  { id: 'tradicional', icone: iconeLoja, nome: 'Pastelaria Tradicional & Balcão', descricao: 'Atendimento presencial com mesas, retirada expressa no balcão e QR Code físico.', tags: ['Comandas digitais', 'QR Cardápio', 'Retirada no balcão'] },
+  { id: 'dark_kitchen', icone: iconeMoto, nome: 'Dark Kitchen & Delivery Puro', descricao: 'Foco total em produção contínua, despacho ágil para motoboys e pedidos centralizados.', tags: ['Pedidos online', 'QR Cardápio', 'Taxa dinâmica'] },
+  { id: 'ponto_movel', icone: iconeCaminhao, nome: 'Trailer ou Barraca de Feira', descricao: 'Operação de feira livre ou ponto itinerante, com fluxo rápido e combos de balcão.', tags: ['Pedidos agendados', 'Pix direto', 'Local móvel'] }
+];
+const dias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+const tempos = ['10–15 min', '15–25 min', '25–40 min'];
+
+export default function CriarEstabelecimento({ onVoltar, onSalvo }: Props) {
+  const [loja, setLoja] = useState<NovaLoja>({ nome: '', url: '', tipo_operacao: 'tradicional', descricao: '', telefone: '', cidade: '', estado: '', tempo_preparo: '15–25 min' });
+  const [extras, setExtras] = useState({ razao: '', documento: '', email: '', cep: '', logradouro: '', numero: '', complemento: '', bairro: '', abertura: '17:00', fechamento: '23:30', minimo: '25,00' });
+  const [diasAtivos, setDiasAtivos] = useState<string[]>(['Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']);
+  const [modalidades, setModalidades] = useState<string[]>(['Retirada no balcão']);
+  const [pagamentos, setPagamentos] = useState<string[]>(['Pix', 'Cartão', 'Dinheiro']);
+  const [aberturaAutomatica, setAberturaAutomatica] = useState(false);
+  const [erro, setErro] = useState('');
+  const [salvando, setSalvando] = useState(false);
+  const [rascunho, setRascunho] = useState(false);
+  const setCampo = <K extends keyof NovaLoja>(campo: K, valor: NovaLoja[K]) => setLoja(atual => ({ ...atual, [campo]: valor }));
+  const setExtra = (campo: keyof typeof extras, valor: string) => setExtras(atual => ({ ...atual, [campo]: valor }));
+  function alternar(valor: string, lista: string[], atualizar: (lista: string[]) => void) {
+    atualizar(lista.includes(valor) ? lista.filter(item => item !== valor) : [...lista, valor]);
   }
-  return <main><h1>Criar estabelecimento</h1>{erro && <p className="erro" role="alert">{erro}</p>}
-    <form onSubmit={e => void salvar(e)}>
-      <label>Nome<input required maxLength={150} value={loja.nome} onChange={e => setLoja({ ...loja, nome: e.target.value })} /></label>
-      <label>URL (sem espaços)<input required maxLength={160} pattern="[a-z0-9]+(-[a-z0-9]+)*" value={loja.url} onChange={e => setLoja({ ...loja, url: e.target.value.toLowerCase() })} /></label>
-      <label>Tipo de operação<select value={loja.tipo_operacao} onChange={e => setLoja({ ...loja, tipo_operacao: e.target.value })}>
-        <option value="tradicional">Tradicional</option><option value="dark_kitchen">Dark Kitchen</option><option value="ponto_movel">Ponto móvel</option>
-      </select></label>
-      {(['descricao', 'telefone', 'cidade', 'estado', 'tempo_preparo'] as const).map(c =>
-        <label key={c}>{c.replace('_', ' ')}<input maxLength={c === 'estado' ? 2 : c === 'descricao' ? 160 : c === 'telefone' ? 20 : c === 'tempo_preparo' ? 50 : 100} value={loja[c]} onChange={e => setLoja({ ...loja, [c]: c === 'estado' ? e.target.value.toUpperCase() : e.target.value })} /></label>)}
-      <button className="principal" disabled={salvando}>{salvando ? 'Salvando...' : 'Salvar estabelecimento'}</button>
-    </form><button onClick={onVoltar}>Voltar</button>
-  </main>;
+  async function salvar(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault(); setErro(''); setSalvando(true);
+    try {
+      await requisicao('/estabelecimentos', { method: 'POST', body: JSON.stringify(loja) });
+      await onSalvo();
+    } catch (e) { setErro((e as Error).message); }
+    finally { setSalvando(false); }
+  }
+  return (
+    <main className="pm-loja-pagina">
+      <div className="pm-loja-trilha">Minha Área › Gerenciar Lojas › <strong>Criar Novo Estabelecimento</strong></div>
+      <div className="pm-loja-intro"><h1>Criar Novo Estabelecimento</h1><p>Cadastre sua pastelaria, delivery ou uma nova filial da sua rede em poucos passos. Comece a vender de forma simples, rápida e sem taxas abusivas!</p></div>
+      <section className="pm-loja-formatos"><div className="pm-loja-faixa"><strong>Selecione o Formato Principal de Operação</strong><small>Influencia o fluxo da cozinha e do menu</small></div><div className="pm-loja-formatos-grid">{formatos.map(f => <button key={f.id} type="button" className={`pm-loja-formato ${loja.tipo_operacao === f.id ? 'selecionado' : ''}`} onClick={() => setCampo('tipo_operacao', f.id)}><span className="pm-loja-formato-icone" aria-hidden="true"><img src={f.icone} alt="" /></span>{loja.tipo_operacao === f.id && <span className="pm-loja-selecionado">✓ Selecionado</span>}<strong>{f.nome}</strong><p>{f.descricao}</p><span className="pm-loja-tags">{f.tags.map(tag => <small key={tag}>{tag}</small>)}</span></button>)}</div></section>
+      {erro && <p className="pm-loja-erro" role="alert">{erro}</p>}
+      <form id="pm-form-criar-loja" className="pm-loja-formulario" onSubmit={e => void salvar(e)}>
+        <div className="pm-loja-coluna">
+          <section className="pm-loja-card"><header><h2><span aria-hidden="true" /> 1. Identidade do Estabelecimento</h2><small>Obrigatório</small></header><div className="pm-loja-campos"><label className="pm-loja-largura">Nome Fantasia da Loja *<input required maxLength={150} placeholder="Pastelaria Estrela - Jardins" value={loja.nome} onChange={e => setCampo('nome', e.target.value)} /><em>Este é o nome principal visível aos clientes no topo do cardápio.</em></label><label>Razão Social ou Nome do Titular<input value={extras.razao} onChange={e => setExtra('razao', e.target.value)} placeholder="Nome completo ou razão social" /></label><label>CNPJ ou CPF do Responsável<input value={extras.documento} onChange={e => setExtra('documento', e.target.value)} placeholder="00.000.000/0000-00" /></label><label>Email para Registro<input type="email" value={extras.email} onChange={e => setExtra('email', e.target.value)} placeholder="contato@exemplo.com" /></label><label>WhatsApp para Contato<input maxLength={20} value={loja.telefone} onChange={e => setCampo('telefone', e.target.value)} placeholder="(11) 98765-4321" /></label><label className="pm-loja-largura">Link Personalizado da Loja (URL do Cardápio) *<div className="pm-loja-url"><span>pastrymenu.com.br/</span><input required maxLength={160} pattern="[a-z0-9]+(-[a-z0-9]+)*" value={loja.url} onChange={e => setCampo('url', e.target.value.toLowerCase().replace(/\s+/g, '-'))} placeholder="pastelaria-estrela" /></div><em>Seus clientes acessarão o cardápio pelo link personalizado.</em></label><label className="pm-loja-largura">Descrição / Slogan Curto da Pastelaria<textarea rows={3} maxLength={160} value={loja.descricao} onChange={e => setCampo('descricao', e.target.value)} placeholder="Tradição em pastéis artesanais ultracrocantes..." /></label></div></section>
+          <section className="pm-loja-card"><header><h2><span aria-hidden="true" /> 2. Localização & Logística de Entrega</h2><small>Obrigatório</small></header><div className="pm-loja-campos"><label>CEP da Operação<input value={extras.cep} onChange={e => setExtra('cep', e.target.value)} placeholder="00000-000" /></label><label>Logradouro / Avenida / Rua<input value={extras.logradouro} onChange={e => setExtra('logradouro', e.target.value)} placeholder="Rua Bela Cintra" /></label><label>Número<input value={extras.numero} onChange={e => setExtra('numero', e.target.value)} placeholder="1850" /></label><label>Complemento / Loja<input value={extras.complemento} onChange={e => setExtra('complemento', e.target.value)} placeholder="Térreo / Box 4" /></label><label>Bairro<input value={extras.bairro} onChange={e => setExtra('bairro', e.target.value)} placeholder="Bairro" /></label><label>Cidade<input maxLength={100} value={loja.cidade} onChange={e => setCampo('cidade', e.target.value)} placeholder="São Paulo" /></label><label>Estado (UF)<input maxLength={2} value={loja.estado} onChange={e => setCampo('estado', e.target.value.toUpperCase())} placeholder="SP" /></label><div className="pm-loja-largura"><strong className="pm-loja-label">Modalidades de Atendimento Habilitadas</strong><div className="pm-loja-escolhas">{['Retirada no balcão', 'Pedidos agendados', 'Delivery próprio'].map(item => <label key={item} className="pm-loja-check"><input type="checkbox" checked={modalidades.includes(item)} onChange={() => alternar(item, modalidades, setModalidades)} /><span>{item}</span></label>)}</div></div></div></section>
+          <section className="pm-loja-card"><header><h2><span aria-hidden="true" /> 3. Horário de Funcionamento</h2><small>Obrigatório</small></header><p className="pm-loja-ajuda">Defina os dias em que a pastelaria atende, abertura, fechamento e pausas programadas.</p><strong className="pm-loja-label">Dias da Semana Ativos</strong><div className="pm-loja-dias">{dias.map(dia => <button type="button" key={dia} className={diasAtivos.includes(dia) ? 'ativo' : ''} onClick={() => alternar(dia, diasAtivos, setDiasAtivos)}><span>{diasAtivos.includes(dia) ? '■' : '□'}</span><strong>{dia}</strong><small>{diasAtivos.includes(dia) ? 'Aberto' : 'Fechado'}</small></button>)}</div><div className="pm-loja-campos"><label>Horário de Abertura<input type="time" value={extras.abertura} onChange={e => setExtra('abertura', e.target.value)} /></label><label>Horário de Fechamento<input type="time" value={extras.fechamento} onChange={e => setExtra('fechamento', e.target.value)} /></label></div><label className="pm-loja-check pm-loja-check-linha"><input type="checkbox" checked={aberturaAutomatica} onChange={e => setAberturaAutomatica(e.target.checked)} /><span>Habilitar Abertura Automática <small>Abre a loja automaticamente no horário configurado.</small></span></label></section>
+          <section className="pm-loja-card"><header><h2><span aria-hidden="true" /> 4. Tempo de Preparo & Pedido Mínimo</h2><small>Obrigatório</small></header><p className="pm-loja-ajuda">Parâmetros essenciais para o cálculo inteligente do tempo da comanda.</p><div className="pm-loja-campos"><div><strong className="pm-loja-label">Tempo Médio de Montagem do Pedido</strong><div className="pm-loja-tempos">{tempos.map(tempo => <button type="button" key={tempo} className={loja.tempo_preparo === tempo ? 'ativo' : ''} onClick={() => setCampo('tempo_preparo', tempo)}>{tempo}</button>)}</div><em>Estimativa exibida ao cliente na vitrine.</em></div><label>Valor Mínimo de Pedido<input inputMode="decimal" value={extras.minimo} onChange={e => setExtra('minimo', e.target.value)} placeholder="25,00" /></label></div><div className="pm-loja-dica"><strong>Produção Inteligente de Pedidos</strong><p>Organize o preparo conforme a previsão de retirada ou entrega.</p></div></section>
+          <section className="pm-loja-card"><header><h2><span aria-hidden="true" /> 5. Formas de Pagamento Aceitas</h2><small>Sem intermediários</small></header><p className="pm-loja-ajuda">Selecione os métodos aceitos no balcão e delivery. O valor das vendas vai direto para você.</p><div className="pm-loja-pagamentos">{[{nome:'Pix',texto:'Pagamento instantâneo'},{nome:'Cartão',texto:'Crédito e débito'},{nome:'Dinheiro',texto:'Pagamento em espécie'}].map(item => <label key={item.nome} className="pm-loja-check pm-loja-pagamento"><input type="checkbox" checked={pagamentos.includes(item.nome)} onChange={() => alternar(item.nome, pagamentos, setPagamentos)} /><span><strong>{item.nome}</strong><small>{item.texto}</small></span></label>)}</div></section>
+        </div>
+        <aside className="pm-loja-lateral"><section className="pm-loja-previa"><div className="pm-loja-previa-titulo"><strong>● PRÉVIA</strong><small>Como o cliente vê</small></div><div className="pm-loja-previa-imagem"><div><strong>{loja.nome || 'Sua pastelaria'}</strong><small>{loja.descricao || 'Pastéis artesanais & especiais'}</small></div></div><div className="pm-loja-previa-info"><span>{loja.tempo_preparo}</span><span>{loja.cidade || 'Sua cidade'}</span></div><div className="pm-loja-previa-link"><strong>SEU LINK OFICIAL EXCLUSIVO DE PEDIDOS</strong><p>pastrymenu.com.br/{loja.url || 'sua-loja'}</p></div></section><section className="pm-loja-vantagens"><h3>Vantagens Pastry Menu</h3><p>✓ Cadastre sua loja e apresente seu cardápio online.</p><p>✓ Compartilhe seu link personalizado com os clientes.</p><p>✓ Organize os pedidos em um só lugar.</p></section><p className="pm-loja-aviso">Endereço completo, horários, modalidades, pedido mínimo e formas de pagamento ainda não são enviados pela API atual.</p></aside>
+        <div className="pm-loja-acoes"><button type="button" className="pm-loja-voltar" onClick={onVoltar}>← Voltar para Minha Área</button><button type="button" className="pm-loja-rascunho" onClick={() => setRascunho(true)}>Salvar Rascunho</button><span className="pm-loja-acoes-espaco" />{rascunho && <small>Rascunho não persistido</small>}<button type="submit" className="pm-loja-salvar" disabled={salvando}>{salvando ? 'Salvando...' : 'Salvar & Avançar para Cardápio →'}</button></div>
+      </form>
+    </main>
+  );
 }
