@@ -7,7 +7,8 @@ CREATE TABLE usuarios (
  nome VARCHAR(120) NOT NULL,
  email VARCHAR(190) UNIQUE,
  telefone VARCHAR(20) UNIQUE,
- senha_hash VARCHAR(255) NOT NULL,
+ senha_hash VARCHAR(255) NULL,
+ google_id VARCHAR(255) NULL UNIQUE,
  foto VARCHAR(255) NULL,
  ativo BOOLEAN NOT NULL DEFAULT TRUE,
  criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -56,6 +57,14 @@ CREATE TABLE estabelecimentos (
     FOREIGN KEY (id_usu) REFERENCES usuarios(id_usu)
 );
 
+CREATE TABLE sessoes_usuarios (
+  token_hash CHAR(64) PRIMARY KEY,
+  id_usu BIGINT UNSIGNED NOT NULL,
+  expira_em DATETIME NOT NULL,
+  criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_sessoes_usuario (id_usu),
+  FOREIGN KEY (id_usu) REFERENCES usuarios(id_usu) ON DELETE CASCADE
+);
 
 
 

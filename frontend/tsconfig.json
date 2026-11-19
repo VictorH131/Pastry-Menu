@@ -45,5 +45,5 @@
   },
 
   // Arquivos que serão verificados pelo TypeScript
-  "include": ["src", "vite.config.ts"]
+  "include": ["compartivo", "vite.config.ts"]
 }

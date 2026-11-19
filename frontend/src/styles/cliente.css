@@ -1,32 +1,20 @@
+
+/* ==========================================
+   1. CONFIGURAÇÕES GERAIS
+========================================== */
+
 * {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font: 16px system-ui, Arial;
+    font: 16px system-ui, Arial, sans-serif;
     background: #fafafa;
-    color: #242424
+    color: #242424;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 18px max(24px, calc((100vw - 1000px)/2));
-    border-bottom: 1px solid #ddd
-}
-
-header strong {
-    color: #b91c1c;
-    font-size: 23px
-}
-
-nav {
-    display: flex;
-    gap: 12px
-}
+/* Botões gerais */
 
 button {
     cursor: pointer;
@@ -34,92 +22,362 @@ button {
     border: 1px solid #ccc;
     border-radius: 7px;
     background: white;
-    color: inherit
+    color: inherit;
+    font: inherit;
 }
 
 button:hover {
-    background: #f2f2f2
+    background: #f2f2f2;
 }
 
-.principal {
-    background: #b91c1c;
+
+/* ==========================================
+   2. HEADER
+========================================== */
+
+.header {
+    width: 100%;
+    background: #b00008;
+    padding: 12px 30px;
+}
+
+.header-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Logo */
+
+.header-logo {
+    width: 260px;
+    max-width: 25%;
+    min-height: 0;
+    flex-shrink: 1;
+}
+
+.header-logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Menu de navegação */
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    background: #fff;
+    border-radius: 50px;
+    padding: 6px 18px;
+    box-shadow: 0 4px 8px #00000025;
+}
+
+.header-nav button {
+    background: transparent;
+    border: none;
+    padding: 8px 5px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #654b46;
+    white-space: nowrap;
+}
+
+.header-nav button:hover {
+    background: transparent;
+    color: #b00008;
+}
+
+/* Ações do header */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+/* Carrinho */
+
+.header-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #ffae18;
+    color: #111;
+    flex-shrink: 0;
+}
+
+.header-cart:hover {
+    background: #ffc247;
+}
+
+.cart-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+@media (max-width: 600px) {
+    .cart-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 21px;
+    height: 21px;
+    background: white;
+    color: #b00008;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+/* Autenticação */
+
+.header-auth {
+    background: transparent;
+    border: none;
+    padding: 5px;
     color: white;
-    border: 0;
-    margin-top: 15px
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
-.principal:hover {
-    background: #991b1b
+.header-auth:hover {
+    background: transparent;
+    color: #ffbd20;
 }
+
+
+/* Responsividade do Header - Celular */
+
+@media (max-width: 600px) {
+    .header {
+        padding: 10px;
+    }
+
+    .header-container {
+        gap: 12px 8px;
+    }
+
+    .header-logo {
+        width: 150px;
+        max-width: 100%;
+    }
+
+    .header-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
+        padding: 8px;
+        border-radius: 15px;
+    }
+
+    .header-nav button {
+        width: 100%;
+        padding: 7px 3px;
+        font-size: 12px;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .header-cart {
+        width: 36px;
+        height: 36px;
+    }
+
+    .cart-icon {
+        font-size: 19px;
+    }
+
+    .cart-count {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    .header-auth {
+        max-width: 95px;
+        font-size: 12px;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* Responsividade do Header - Celular pequeno */
+
+@media (max-width: 380px) {
+    .header-logo {
+        width: 125px;
+    }
+
+    .header-actions {
+        gap: 7px;
+    }
+
+    .header-auth {
+        max-width: 90px;
+        font-size: 11px;
+    }
+
+    .header-cart {
+        width: 34px;
+        height: 34px;
+    }
+
+    .header-nav button {
+        font-size: 11px;
+    }
+}
+
+
+/* ==========================================
+   3. MAIN - CONTEÚDO PRINCIPAL
+========================================== */
 
 main {
     max-width: 1000px;
     margin: 38px auto;
-    padding: 0 24px
+    padding: 0 24px;
 }
 
+/* Títulos */
+
 h1 {
-    font-size: 28px
+    font-size: 28px;
 }
 
 h2 {
-    font-size: 20px
+    font-size: 20px;
 }
+
+/* Botão principal */
+
+.principal {
+    background: #b91c1c;
+    color: white;
+    border: none;
+    margin-top: 15px;
+}
+
+.principal:hover {
+    background: #991b1b;
+}
+
+/* Responsividade do Main */
+
+@media (max-width: 600px) {
+    main {
+        margin: 24px auto;
+        padding: 0 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+}
+
+
+/* ==========================================
+   4. GRADE E CARDS
+========================================== */
 
 .grade {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(240px, 100%), 1fr)
+    );
     gap: 16px;
-    margin: 24px 0
+    margin: 24px 0;
 }
 
 article {
     padding: 18px;
     background: white;
     border: 1px solid #ddd;
-    border-radius: 10px
+    border-radius: 10px;
 }
+
+/* Responsividade da Grade */
+
+@media (max-width: 600px) {
+    .grade {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+
+/* ==========================================
+   5. FORMULÁRIOS
+========================================== */
 
 form {
     max-width: 440px;
     display: grid;
     gap: 12px;
-    margin: 24px 0
+    margin: 24px 0;
 }
 
 label {
     display: grid;
     gap: 6px;
-    text-transform: capitalize
+    text-transform: capitalize;
 }
 
 input,
 select {
     width: 100%;
+    min-width: 0;
     padding: 10px;
     border: 1px solid #bbb;
     border-radius: 6px;
-    font: inherit
+    font: inherit;
 }
+
+/* Mensagens de erro */
 
 .erro {
     padding: 12px;
     background: #fee2e2;
     color: #991b1b;
-    border-radius: 6px
+    border-radius: 6px;
 }
 
-@media(max-width:600px) {
-    header {
-        padding: 16px;
-        gap: 10px
-    }
+/* Responsividade dos Formulários */
 
-    nav {
-        gap: 4px
-    }
-
-    nav button {
-        padding: 8px
+@media (max-width: 600px) {
+    form {
+        max-width: 100%;
     }
 }

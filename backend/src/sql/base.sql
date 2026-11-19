@@ -6,9 +6,9 @@ INSERT INTO usuarios (
     foto
 ) VALUES (
     'victor Hernandez',
-    'victor@exemplo.com',
+    'victornado21@gmail.com',
     '19999999999',
-    '$2b$12$hash_ficticio_apenas_para_exemplo',
+    '',
     'usuarios/victor.png'
 );
 

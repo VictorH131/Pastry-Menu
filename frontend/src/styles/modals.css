@@ -1,195 +1,487 @@
-.toast-stack {
-    position: fixed;
-    top: 105px;
-    right: 18px;
-    z-index: 100;
-    display: grid;
-    gap: 10px;
-    max-width: calc(100vw - 36px)
-}
 
-.toast {
-    display: flex;
-    gap: 12px;
-    align-items: start;
-    background: white;
-    box-shadow: 0 6px 25px #0003;
-    border-left: 5px solid #2585cc;
-    border-radius: 10px;
-    padding: 15px;
-    width: 340px;
-    max-width: 100%
-}
+/* ==========================================
+   LOGIN MODAL - COMPACTO
+========================================== */
 
-.toast.error {
-    border-color: #d30016
-}
-
-.toast.success {
-    border-color: #218e4c
-}
-
-.toast-symbol {
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    width: 23px;
-    height: 23px;
-    display: grid;
-    place-items: center;
-    font-weight: 800
-}
-
-.toast p {
-    font-size: 12px;
-    margin: 5px 0;
-    color: #666
-}
-
-.toast button {
-    margin-left: auto;
-    background: none;
-    border: 0;
-    font-size: 22px;
-    color: #777
-}
-
-.modal-overlay {
+.pm-modal-overlay {
     position: fixed;
     inset: 0;
-    background: #0009;
-    display: grid;
-    place-items: center;
-    padding: 18px;
-    z-index: 90
-}
-
-.modal {
-    position: relative;
-    background: white;
-    border-radius: 24px;
-    padding: 30px 28px 25px;
-    width: 420px;
-    max-width: 100%;
-    max-height: 95vh;
-    overflow-y: auto;
-    text-align: center;
-    box-shadow: 0 20px 70px #0005
-}
-
-.close-modal {
-    position: absolute;
-    right: 17px;
-    top: 15px;
-    background: #ffc400;
-    border: 0;
-    border-radius: 50%;
-    font-size: 22px;
-    width: 32px;
-    height: 32px
-}
-
-.modal-logo {
-    width: 175px;
-    height: 90px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 0 transparent)
-}
-
-.modal h2 {
-    font-size: 23px;
-    margin: 10px 0 5px
-}
-
-.modal p {
-    font-size: 12px;
-    color: #887a78;
-    line-height: 1.5;
-    margin-bottom: 20px
-}
-
-.tabs {
+    z-index: 1000;
     display: flex;
-    background: #ffe4e4;
-    border-radius: 12px;
-    margin: 15px 0;
-    overflow: hidden
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    overflow-y: auto;
 }
 
-.tabs button {
-    flex: 1;
-    border: 0;
-    background: transparent;
-    padding: 12px
-}
-
-.tabs .active {
-    background: #b8000c;
-    color: white;
-    border-radius: 12px
-}
-
-.google,
-.modal-primary,
-.modal-back {
-    display: block;
+.pm-modal.pm-login {
+    position: relative;
     width: 100%;
-    border-radius: 9px;
-    padding: 13px;
-    margin: 12px 0;
-    font-weight: 700
-}
-
-.google {
+    max-width: 390px;
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    padding: 24px 25px 20px;
     background: white;
-    border: 1px solid #6e6e6e
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 12px 35px #00000030;
 }
 
-.modal-primary {
-    background: #ba0009;
-    color: white;
-    border: 0
+/* FECHAR */
+
+.pm-login .pm-fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: #ffb900;
+    color: #231414;
+    font-size: 23px;
+    cursor: pointer;
 }
 
-.modal-back {
-    background: #ffbf00;
-    color: #442718;
-    border: 0
-}
+/* LOGO */
 
-.separator {
-    color: #a58c87;
-    font-size: 11px;
-    margin: 14px
-}
-
-.terms {
+.pm-login-logo {
     display: block;
-    color: #b89c96;
+    width: 85px;
+    max-width: 40%;
+    height: auto;
+    margin: 0 auto 10px;
+    object-fit: contain;
+}
+
+/* TÍTULO E SUBTÍTULO */
+
+.pm-login h2 {
+    margin: 0;
+    color: #3c1118;
+    font-size: 21px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.pm-login-subtitulo {
+    margin: 7px 0 16px;
+    color: #846561;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* ABAS */
+
+.pm-login-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 16px;
+    background: #ffe1df;
+    border-radius: 13px;
+}
+
+.pm-login-tabs button {
+    min-height: 35px;
+    padding: 6px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #674c49;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: -20px;
+}
+
+.pm-login-tabs button.ativo {
+    background: #b90009;
+    color: white;
+}
+
+/* OPÇÕES */
+
+.pm-login-opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.pm-login-google,
+.pm-login-visitante {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 42px;
+    padding: 8px;
+    border: 1px solid #262626;
+    border-radius: 10px;
+    background: white;
+    color: #42171c;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pm-login-google svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* BOTÃO PRINCIPAL */
+
+.pm-login-telefone {
+    width: 100%;
+    min-height: 45px;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background: #b90009;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 3px 6px #00000020;
+}
+
+.pm-login-telefone:hover {
+    background: #9e0008;
+}
+
+/* DIVISÓRIA */
+
+.pm-login-divisor {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a7807a;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.pm-login-divisor::before,
+.pm-login-divisor::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #ffd6d2;
+}
+
+/* E-MAIL E VOLTAR */
+
+.pm-login-email,
+.pm-login-voltar {
+    border: none;
+    background: transparent;
+    color: #9d0009;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px;
+}
+
+/* FORMULÁRIO */
+
+.pm-login-form {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    text-align: left;
+}
+
+.pm-login-form label {
+    display: grid;
+    gap: 5px;
+    color: #42171c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pm-login-form input {
+    width: 100%;
+    min-height: 38px;
+    padding: 8px;
+    border: 1px solid #d8c9c9;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/* TERMOS */
+
+.pm-login-termos {
+    margin: 15px 0 0;
+    color: #a7807a;
     font-size: 10px;
     line-height: 1.5;
-    margin-top: 24px
 }
 
-.modal label {
-    display: block;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 700;
-    margin: 22px 0
+.pm-login-termos a {
+    color: #b65b16;
+    text-decoration: underline;
 }
 
-.modal input {
-    width: 100%;
-    display: block;
-    background: #ffe7e7;
-    border: 0;
-    border-radius: 7px;
-    padding: 14px;
-    margin-top: 8px
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+    .pm-modal.pm-login {
+        max-width: 350px;
+        padding: 20px 18px 16px;
+        border-radius: 17px;
+    }
+
+    .pm-login-logo {
+        width: 75px;
+    }
+
+    .pm-login h2 {
+        font-size: 19px;
+    }
+
+    .pm-login-subtitulo {
+        font-size: 11px;
+    }
+
+    .pm-login-tabs button {
+        font-size: 12px;
+    }
+
+    .pm-login-google,
+    .pm-login-visitante {
+        font-size: 12px;
+    }
+
+    .pm-login-telefone {
+        font-size: 13px;
+    }
 }
 
-.code-label input {
-    letter-spacing: 12px;
-    text-align: center;
-    font-size: 24px
+@media (max-width: 380px) {
+    .pm-modal.pm-login {
+        padding: 18px 14px 14px;
+    }
+
+    .pm-login h2 {
+        font-size: 18px;
+    }
+}
+
+
+
+
+
+
+/* =========================================
+   PERFIL DO USUÁRIO — COMPACTO
+========================================= */
+
+.pm-conta-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pm-avatar-botao {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #fff1d4;
+  color: #a90009;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pm-avatar-botao img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pm-conta-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 290px;
+  max-width: calc(100vw - 24px);
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1100;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  color: #303030;
+}
+
+.pm-conta-topo {
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffbb35;
+}
+
+.pm-conta-topo strong {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+}
+
+.pm-conta-topo button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.pm-conta-perfil {
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.pm-conta-foto {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff1d4;
+  color: #a90009;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.pm-conta-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pm-conta-perfil strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pm-conta-perfil > span {
+  font-size: 11px;
+  color: #666;
+  overflow-wrap: anywhere;
+}
+
+.pm-conta-opcoes {
+  padding: 7px;
+}
+
+.pm-conta-opcoes button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  text-align: left;
+  color: #333;
+  cursor: pointer;
+}
+
+.pm-conta-opcoes button:not(:disabled):hover {
+  background: #fff3ef;
+}
+
+.pm-conta-opcoes button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.pm-conta-opcao-icone {
+  width: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.pm-conta-opcoes button > span:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pm-conta-opcoes strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pm-conta-opcoes small {
+  font-size: 10px;
+  color: #777;
+}
+
+.pm-conta-seta {
+  font-size: 18px;
+}
+
+.pm-conta-rodape {
+  padding: 10px;
+  border-top: 1px solid #eaeaea;
+}
+
+.pm-conta-sair {
+  width: 100%;
+  padding: 10px;
+  background: #b90009;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.pm-conta-sair:hover {
+  background: #960007;
+}
+
+.pm-conta-links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+}
+
+.pm-conta-links a {
+  color: #555;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .pm-conta-popup {
+    position: fixed;
+    top: 65px;
+    right: 10px;
+    max-height: calc(100dvh - 75px);
+    overflow-y: auto;
+  }
 }
